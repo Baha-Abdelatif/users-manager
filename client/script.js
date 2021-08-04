@@ -1,7 +1,10 @@
-const register_form = document.forms.register_form;
 const apiUrl = "http://localhost:1337";
 
+const register_form = document.forms.register_form;
 register_form.addEventListener('submit', register);
+
+const login_form = document.forms.login_form;
+login_form.addEventListener('submit', login);
 
 function register(e) {
   e.preventDefault();
@@ -24,5 +27,28 @@ function register(e) {
       console.log(data)
     })
     .catch(err => console.error(err))
+}
 
+function login(e) {
+  e.preventDefault();
+  const { login_email, login_password } = login_form;
+  // console.log(username.value, email.value, password.value)
+  const payload = {
+    identifier: login_email.value,
+    password: login_password.value
+  }
+  console.log(payload)
+  fetch(`${apiUrl}/auth/local`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      localStorage.setItem("user", JSON.stringify(data))
+    })
+    .catch(err => console.error(err))
 }
