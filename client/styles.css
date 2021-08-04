@@ -2,10 +2,17 @@ body {
   background-color: turquoise;
   color:white;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding: 5%;
 }
 h1 {
   text-align: center;
   text-transform: uppercase;
+}
+h3{
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  margin: 0 0 2% 2%;
+  text-decoration:underline;
 }
 
 .main {
@@ -13,3 +20,43 @@ h1 {
   margin: 0 auto;
 }
 
+.register_container{
+  width: 80%;
+  margin: 30% auto;
+  border: 1px solid white;
+  border-radius: 50px;
+  padding: 5%;
+}
+.register_container form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;  
+}
+
+.register_container input{
+  width:92.5%;
+  height:7.5vh;
+  font-size: 1.5rem;
+  border-radius:50px;
+  border-color: whitesmoke;
+  margin: 1vh auto;
+  margin-top: 0;
+  padding-left: 5%;
+}
+.register_container button{
+  width: 100%;
+   background-color: turquoise;
+  color: whitesmoke;
+  font-size: 1.5rem;
+  height: 5vh;
+  border-radius: 50px;
+  border: 1px solid whitesmoke;
+  
+  cursor: pointer;
+}
+.register_container button:hover{
+ background-color: whitesmoke;
+  color: turquoise;
+  border: none;
+}
