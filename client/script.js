@@ -15,6 +15,9 @@ profile.style.display = "none";
 const show_profile_btn = document.querySelector(".show_profile");
 show_profile_btn.addEventListener("click", showProfile);
 
+const logout_button = document.querySelector(".logout_button");
+logout_button.addEventListener("click", logout);
+
 function register(e) {
   e.preventDefault();
   const { username, email, password } = register_form;
@@ -66,6 +69,16 @@ function login(e) {
       localStorage.setItem("user", JSON.stringify(data))
     })
     .catch(err => console.error(err))
+}
+
+function logout() {
+  document.querySelector(".forms").style.display = "flex";
+  is_logged_in = false;
+  profile_elt.style.display = "none";
+  profile.style.display = "none";
+  show_profile_btn.style.display = "block";
+  localStorage.removeItem("user");
+  console.log("logging out...")
 }
 
 function showProfile() {
