@@ -11,7 +11,7 @@
 <body>
   <h1>Users Manager</h1>
   <div class="main">
-    <div class="forms">
+    <div class="forms" style="display: flex;">
       <div class="register_container form_container">
         <h3>Register :</h3>
         <form action="#" id="register_form">        
@@ -30,8 +30,16 @@
         </form>
       </div>
     </div>
-    <div class="profile_container form_container">
+    <div class="profile_container form_container" style="display: none;">
       <button class="show_profile">Show Profile</button>
+      <div id="profile">
+        <h4 class="profile_username"></h4>
+        <h5 class="profile_email"></h5>
+        <p class="member_since">
+          Member Since : <span class="registration_date"></span>
+        </p>
+        <button class="logout_button">Sign Out</button>
+      </div>
     </div>
 </body>
 </html>

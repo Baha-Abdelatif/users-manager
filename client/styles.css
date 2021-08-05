@@ -22,9 +22,7 @@ h3{
   justify-content: center;
   flex-direction: column;
 }
-.forms{
-  display:flex;
-}
+
 .form_container{
   width: 80%;
   margin: 2.5% auto;

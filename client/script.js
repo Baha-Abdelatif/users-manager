@@ -6,8 +6,11 @@ register_form.addEventListener('submit', register);
 const login_form = document.forms.login_form;
 login_form.addEventListener('submit', login);
 
-const profile_elt = document.querySelector(".profile");
+const profile_elt = document.querySelector(".profile_container");
 let is_logged_in = false;
+
+const profile = document.getElementById("profile");
+profile.style.display = "none";
 
 const show_profile_btn = document.querySelector(".show_profile");
 show_profile_btn.addEventListener("click", showProfile);
@@ -31,6 +34,9 @@ function register(e) {
     .then(response => response.json())
     .then(data => {
       console.log(data)
+      document.querySelector(".forms").style.display = "none";
+      is_logged_in = true;
+      profile_elt.style.display = "flex"
     })
     .catch(err => console.error(err))
 }
@@ -54,6 +60,9 @@ function login(e) {
     .then(response => response.json())
     .then(data => {
       console.log(data)
+      document.querySelector(".forms").style.display = "none";
+      is_logged_in = true;
+      profile_elt.style.display = "flex"
       localStorage.setItem("user", JSON.stringify(data))
     })
     .catch(err => console.error(err))
@@ -69,6 +78,11 @@ function showProfile() {
   })
     .then(response => response.json())
     .then(data => {
+      document.querySelector(".profile_username").innerHTML = data.username;
+      document.querySelector(".profile_email").innerHTML = data.email;
+      document.querySelector(".member_since").innerHTML = data.created_at;
+      profile.style.display = "block";
+      show_profile_btn.style.display = "none";
       console.log(data);
     })
     .catch(err => console.error(err))
