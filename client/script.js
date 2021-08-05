@@ -6,6 +6,12 @@ register_form.addEventListener('submit', register);
 const login_form = document.forms.login_form;
 login_form.addEventListener('submit', login);
 
+const profile_elt = document.querySelector(".profile");
+let is_logged_in = false;
+
+const show_profile_btn = document.querySelector(".show_profile");
+show_profile_btn.addEventListener("click", showProfile);
+
 function register(e) {
   e.preventDefault();
   const { username, email, password } = register_form;
@@ -49,6 +55,21 @@ function login(e) {
     .then(data => {
       console.log(data)
       localStorage.setItem("user", JSON.stringify(data))
+    })
+    .catch(err => console.error(err))
+}
+
+function showProfile() {
+  const token = JSON.parse(localStorage.getItem("user")).jwt;
+  // console.log(token)
+  fetch(`${apiUrl}/users/me`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
     })
     .catch(err => console.error(err))
 }

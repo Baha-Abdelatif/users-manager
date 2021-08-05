@@ -11,22 +11,27 @@
 <body>
   <h1>Users Manager</h1>
   <div class="main">
-    <div class="register_container form_container">
-      <h3>Register :</h3>
-      <form action="#" id="register_form">        
-        <input type="text" placeholder="Username" id="username" required autocomplete="off">
-        <input type="email" placeholder="Email" id="email" required autocomplete="off">
-        <input type="password" placeholder="Password" id="password" required autocomplete="off">
-        <button type="submit">Sign Up</button>
-      </form>
+    <div class="forms">
+      <div class="register_container form_container">
+        <h3>Register :</h3>
+        <form action="#" id="register_form">        
+          <input type="text" placeholder="Username" id="username" required autocomplete="off">
+          <input type="email" placeholder="Email" id="email" required autocomplete="off">
+          <input type="password" placeholder="Password" id="password" required autocomplete="off">
+          <button type="submit">Sign Up</button>
+        </form>
+      </div>
+      <div class="login_container form_container">
+        <h3>Login :</h3>
+        <form action="#" id="login_form">        
+          <input type="email" placeholder="Email" id="login_email" required autocomplete="off">
+          <input type="password" placeholder="Password" id="login_password" required autocomplete="off">
+          <button type="submit">Sign In</button>
+        </form>
+      </div>
     </div>
-    <div class="login_container form_container">
-      <h3>Login :</h3>
-      <form action="#" id="login_form">        
-        <input type="email" placeholder="Email" id="login_email" required autocomplete="off">
-        <input type="password" placeholder="Password" id="login_password" required autocomplete="off">
-        <button type="submit">Sign In</button>
-      </form>
+    <div class="profile_container form_container">
+      <button class="show_profile">Show Profile</button>
     </div>
 </body>
 </html>
