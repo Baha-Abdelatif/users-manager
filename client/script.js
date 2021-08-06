@@ -1,5 +1,4 @@
 const apiUrl = "http://localhost:1337";
-
 const register_form = document.forms.register_form;
 register_form.addEventListener('submit', register);
 
@@ -10,13 +9,47 @@ const profile_elt = document.querySelector(".profile_container");
 let is_logged_in = false;
 
 const profile = document.getElementById("profile");
-profile.style.display = "none";
 
 const show_profile_btn = document.querySelector(".show_profile");
 show_profile_btn.addEventListener("click", showProfile);
 
 const logout_button = document.querySelector(".logout_button");
 logout_button.addEventListener("click", logout);
+
+const messages_elt = document.querySelector(".messages_container")
+const show_messages_btn = document.querySelector(".show_messages");
+show_messages_btn.addEventListener("click", showMessages);
+
+function init() {
+  // TODO
+  isLogged()
+}
+
+init()
+
+function isLogged() {
+  if (is_logged_in === true) {
+    document.querySelector(".forms").style.display = "none";
+    profile_elt.style.display = "flex"
+    messages_elt.style.display = "flex"
+
+  } else {
+    document.querySelector(".forms").style.display = "flex";
+    profile_elt.style.display = "none"
+    profile.style.display = "none";
+    show_profile_btn.style.display = "block";
+    messages_elt.style.display = "none"
+  }
+}
+
+function retrieveJWTtoken() {
+  const userFromStorage = localStorage.getItem("user");
+  if (!userFromStorage) {
+    return { status: "anonymous", msg: "please login", token: null }
+  }
+  const user = JSON.parse(userFromStorage);
+  return { status: "authenticated", msg: "success", token: user.jwt }
+}
 
 function register(e) {
   e.preventDefault();
@@ -37,9 +70,8 @@ function register(e) {
     .then(response => response.json())
     .then(data => {
       console.log(data)
-      document.querySelector(".forms").style.display = "none";
       is_logged_in = true;
-      profile_elt.style.display = "flex"
+      isLogged()
     })
     .catch(err => console.error(err))
 }
@@ -63,9 +95,8 @@ function login(e) {
     .then(response => response.json())
     .then(data => {
       console.log(data)
-      document.querySelector(".forms").style.display = "none";
       is_logged_in = true;
-      profile_elt.style.display = "flex"
+      isLogged()
       localStorage.setItem("user", JSON.stringify(data))
     })
     .catch(err => console.error(err))
@@ -73,17 +104,16 @@ function login(e) {
 
 function logout() {
   document.querySelector(".forms").style.display = "flex";
+  document.querySelector('.all_messages').style.display = "none"
+
   is_logged_in = false;
-  profile_elt.style.display = "none";
-  profile.style.display = "none";
-  show_profile_btn.style.display = "block";
+  isLogged()
   localStorage.removeItem("user");
   console.log("logging out...")
 }
 
 function showProfile() {
-  const token = JSON.parse(localStorage.getItem("user")).jwt;
-  // console.log(token)
+  const token = retrieveJWTtoken().token
   fetch(`${apiUrl}/users/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -97,6 +127,31 @@ function showProfile() {
       profile.style.display = "block";
       show_profile_btn.style.display = "none";
       console.log(data);
+    })
+    .catch(err => console.error(err))
+}
+
+function showMessages() {
+  const token = retrieveJWTtoken().token
+  fetch(`${apiUrl}/messages`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      data.map((message) => {
+        let message_title = document.createElement("h5");
+        message_title.innerText = message.title;
+        let message_content = document.createElement("p");
+        message_content.innerText = message.description;
+        let message_box = document.createElement("li");
+        message_box.appendChild(message_title);
+        message_box.appendChild(message_content);
+        document.querySelector(".messages_list").appendChild(message_box);
+      });
+      show_messages_btn.style.display = "none";
+      document.querySelector('.all_messages').style.display = "block"
     })
     .catch(err => console.error(err))
 }
